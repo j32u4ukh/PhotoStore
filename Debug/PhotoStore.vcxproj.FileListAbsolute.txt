@@ -1,0 +1,3 @@
+D:\Programing\CppProjects\CppLearning\PhotoStore\Debug\PhotoStore.vcxprojAssemblyReference.cache
+D:\Programing\CppProjects\CppLearning\PhotoStore\Debug\PhotoStore.Form1.resources
+D:\Programing\CppProjects\CppLearning\PhotoStore\Debug\PhotoStore.vcxproj.GenerateResource.cache
