@@ -1,0 +1,2 @@
+# PhotoStore
+C++ &amp; OpenCV
