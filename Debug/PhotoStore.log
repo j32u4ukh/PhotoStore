@@ -1,3 +1,6 @@
-﻿  CppCLR_WinformsProjekt.cpp
+﻿  Using triplet "x86-windows" from "D:\Programing\vcpkg\installed\x86-windows\"
+  CppCLR_WinformsProjekt.cpp
+D:\Programing\CppProjects\CppLearning\PhotoStore\Form1.h(240,10): warning C4101: 'pos': 未參考的區域變數
+D:\Programing\CppProjects\CppLearning\PhotoStore\Form1.h(239,19): warning C4101: 'file_exten': 未參考的區域變數
   AssemblyInfo.obj : 發現 MSIL 模組。MSIL 的累加連結已停用。正在執行完整連結
   PhotoStore.vcxproj -> D:\Programing\CppProjects\CppLearning\Debug\PhotoStore.exe

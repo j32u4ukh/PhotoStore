@@ -1,6 +1,7 @@
-#pragma once
+Ôªø#pragma once
 
 namespace CppCLRWinformsProjekt {
+#include <boost/preprocessor/facilities/overload.hpp>
 
 	using namespace System;
 	using namespace System::IO;
@@ -10,9 +11,15 @@ namespace CppCLRWinformsProjekt {
 	using namespace System::Data;
 	using namespace System::Drawing;
 	using namespace System::Diagnostics;
+	using namespace System::Collections::Generic;
+
+#define LOG(msg) Debug::WriteLine("[LOG] " + msg);
+#define WARNING(msg) Debug::WriteLine("[WARNING] " + msg);
+#define ERROR(msg) Debug::WriteLine("[ERROR] " + msg);
+#define DEBUG(level, msg) debugMessage(msg, level);
 
 	/// <summary>
-	/// Zusammenfassung f¸r Form1
+	/// Zusammenfassung fÓÖ¨ Form1
 	/// </summary>
 	public ref class Form1 : public System::Windows::Forms::Form
 	{
@@ -21,7 +28,7 @@ namespace CppCLRWinformsProjekt {
 		{
 			InitializeComponent();
 			//
-			//TODO: Konstruktorcode hier hinzuf¸gen.
+			//TODO: Konstruktorcode hier hinzufÓÖ°en.
 			//
 		}
 
@@ -44,9 +51,10 @@ namespace CppCLRWinformsProjekt {
 	private: System::Windows::Forms::TableLayoutPanel^ tableLayoutPanel1;
 	private: System::Windows::Forms::Button^ previous_button;
 	private: System::Windows::Forms::Button^ next_button;
-	
+
 	private: System::String^ dir_path = "";
 	private: array<String^>^ files;
+	private: int key_number = 0;
 	private: int index = 0;
 	private: int n_file = 0;
 
@@ -56,12 +64,12 @@ namespace CppCLRWinformsProjekt {
 		/// <summary>
 		/// Erforderliche Designervariable.
 		/// </summary>
-		System::ComponentModel::Container ^components;
+		System::ComponentModel::Container^ components;
 
 #pragma region Windows Form Designer generated code
 		/// <summary>
-		/// Erforderliche Methode f¸r die Designerunterst¸tzung.
-		/// Der Inhalt der Methode darf nicht mit dem Code-Editor ge‰ndert werden.
+		/// Erforderliche Methode fÓÖ¨ die DesignerunterstÓÖÆzung.
+		/// Der Inhalt der Methode darf nicht mit dem Code-Editor geÈÑödert werden.
 		/// </summary>
 		void InitializeComponent(void)
 		{
@@ -80,9 +88,10 @@ namespace CppCLRWinformsProjekt {
 			// 
 			this->Execute->Font = (gcnew System::Drawing::Font(L"Consolas", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->Execute->Location = System::Drawing::Point(320, 564);
+			this->Execute->Location = System::Drawing::Point(240, 451);
+			this->Execute->Margin = System::Windows::Forms::Padding(2);
 			this->Execute->Name = L"Execute";
-			this->Execute->Size = System::Drawing::Size(188, 53);
+			this->Execute->Size = System::Drawing::Size(141, 42);
 			this->Execute->TabIndex = 0;
 			this->Execute->Text = L"Execute";
 			this->Execute->UseVisualStyleBackColor = true;
@@ -90,9 +99,10 @@ namespace CppCLRWinformsProjekt {
 			// 
 			// pictureBox1
 			// 
-			this->pictureBox1->Location = System::Drawing::Point(41, 42);
+			this->pictureBox1->Location = System::Drawing::Point(31, 34);
+			this->pictureBox1->Margin = System::Windows::Forms::Padding(2);
 			this->pictureBox1->Name = L"pictureBox1";
-			this->pictureBox1->Size = System::Drawing::Size(691, 362);
+			this->pictureBox1->Size = System::Drawing::Size(518, 290);
 			this->pictureBox1->TabIndex = 2;
 			this->pictureBox1->TabStop = false;
 			// 
@@ -103,9 +113,10 @@ namespace CppCLRWinformsProjekt {
 			this->DebugLog->Dock = System::Windows::Forms::DockStyle::Top;
 			this->DebugLog->Font = (gcnew System::Drawing::Font(L"Consolas", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->DebugLog->Location = System::Drawing::Point(3, 0);
+			this->DebugLog->Location = System::Drawing::Point(2, 0);
+			this->DebugLog->Margin = System::Windows::Forms::Padding(2, 0, 2, 0);
 			this->DebugLog->Name = L"DebugLog";
-			this->DebugLog->Size = System::Drawing::Size(685, 38);
+			this->DebugLog->Size = System::Drawing::Size(514, 32);
 			this->DebugLog->TabIndex = 1;
 			this->DebugLog->Text = L"Log\r\n";
 			// 
@@ -115,20 +126,22 @@ namespace CppCLRWinformsProjekt {
 			this->tableLayoutPanel1->ColumnStyles->Add((gcnew System::Windows::Forms::ColumnStyle(System::Windows::Forms::SizeType::Percent,
 				50)));
 			this->tableLayoutPanel1->Controls->Add(this->DebugLog, 0, 0);
-			this->tableLayoutPanel1->Location = System::Drawing::Point(41, 423);
+			this->tableLayoutPanel1->Location = System::Drawing::Point(31, 338);
+			this->tableLayoutPanel1->Margin = System::Windows::Forms::Padding(2);
 			this->tableLayoutPanel1->Name = L"tableLayoutPanel1";
 			this->tableLayoutPanel1->RowCount = 1;
 			this->tableLayoutPanel1->RowStyles->Add((gcnew System::Windows::Forms::RowStyle(System::Windows::Forms::SizeType::Percent, 50)));
-			this->tableLayoutPanel1->Size = System::Drawing::Size(691, 122);
+			this->tableLayoutPanel1->Size = System::Drawing::Size(518, 98);
 			this->tableLayoutPanel1->TabIndex = 3;
 			// 
 			// previous_button
 			// 
 			this->previous_button->Font = (gcnew System::Drawing::Font(L"Consolas", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->previous_button->Location = System::Drawing::Point(41, 564);
+			this->previous_button->Location = System::Drawing::Point(31, 451);
+			this->previous_button->Margin = System::Windows::Forms::Padding(2);
 			this->previous_button->Name = L"previous_button";
-			this->previous_button->Size = System::Drawing::Size(240, 53);
+			this->previous_button->Size = System::Drawing::Size(180, 42);
 			this->previous_button->TabIndex = 4;
 			this->previous_button->Text = L"<< Previous";
 			this->previous_button->UseVisualStyleBackColor = true;
@@ -138,9 +151,10 @@ namespace CppCLRWinformsProjekt {
 			// 
 			this->next_button->Font = (gcnew System::Drawing::Font(L"Consolas", 19.8F, System::Drawing::FontStyle::Regular, System::Drawing::GraphicsUnit::Point,
 				static_cast<System::Byte>(0)));
-			this->next_button->Location = System::Drawing::Point(547, 564);
+			this->next_button->Location = System::Drawing::Point(410, 451);
+			this->next_button->Margin = System::Windows::Forms::Padding(2);
 			this->next_button->Name = L"next_button";
-			this->next_button->Size = System::Drawing::Size(185, 53);
+			this->next_button->Size = System::Drawing::Size(139, 42);
 			this->next_button->TabIndex = 5;
 			this->next_button->Text = L"Next >>";
 			this->next_button->UseVisualStyleBackColor = true;
@@ -148,14 +162,15 @@ namespace CppCLRWinformsProjekt {
 			// 
 			// Form1
 			// 
-			this->AutoScaleDimensions = System::Drawing::SizeF(8, 15);
+			this->AutoScaleDimensions = System::Drawing::SizeF(6, 12);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
-			this->ClientSize = System::Drawing::Size(1062, 673);
+			this->ClientSize = System::Drawing::Size(796, 538);
 			this->Controls->Add(this->next_button);
 			this->Controls->Add(this->previous_button);
 			this->Controls->Add(this->tableLayoutPanel1);
 			this->Controls->Add(this->pictureBox1);
 			this->Controls->Add(this->Execute);
+			this->Margin = System::Windows::Forms::Padding(2);
 			this->Name = L"Form1";
 			this->Text = L"Form1";
 			this->Load += gcnew System::EventHandler(this, &Form1::Form1_Load);
@@ -168,77 +183,122 @@ namespace CppCLRWinformsProjekt {
 #pragma endregion
 
 	private: System::Void Form1_Load(System::Object^ sender, System::EventArgs^ e) {
+		LOG("message");
+		WARNING("message!!");
+		ERROR("XX message");
+		DEBUG("ERROR", "This is ERROR");
+		Debug::WriteLine(String::Format("[{0}] {1}", "Log", "message"));
 
+		DebugLog->Text = key_number.ToString();
+
+		for each (Control ^ control in this->Controls)
+		{
+			control->KeyDown += gcnew KeyEventHandler(this, &Form1::onKeyDownListener);
+		}
 	}
 
 	private: System::Void Execute_Click(System::Object^ sender, System::EventArgs^ e) {
 		OpenFileDialog^ open_file_dialog = gcnew OpenFileDialog;
 
 		// Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*
-		// ≥]©wFilter°A•Œ•H≠≠©w®œ•Œ™Ã∂}±“™∫¿…Æ◊
+		// Ë®≠ÂÆöFilterÔºåÁî®‰ª•ÈôêÂÆö‰ΩøÁî®ËÄÖÈñãÂïüÁöÑÊ™îÊ°à
 		open_file_dialog->Filter = "Image Files(*.BMP;*.JPG;*.GIF)|*.BMP;*.JPG;*.GIF|All files (*.*)|*.*";
 
-		// πw≥]¿…Æ◊¶W∫Ÿ¨∞™≈≠»
+		// È†êË®≠Ê™îÊ°àÂêçÁ®±ÁÇ∫Á©∫ÂÄº
 		open_file_dialog->FileName = "";
 
-		// ≥]©w∏ı•XøÔæ‹µ¯µ°™∫º–√D¶W∫Ÿ
-		open_file_dialog->Title = "∏¸§Jºvπ≥";
+		// Ë®≠ÂÆöË∑≥Âá∫ÈÅ∏ÊìáË¶ñÁ™óÁöÑÊ®ôÈ°åÂêçÁ®±
+		open_file_dialog->Title = "ËºâÂÖ•ÂΩ±ÂÉè";
 
-		// ≥]©w Filter øÔæ‹º“¶°(®Ã∑” Filter º∆°A¶p•ª®“øÔæ‹ 1 ™Ì•‹∞_©l•X≤{™∫¨∞¬I∞}πœ°AøÔæ‹ 2 ™Ì•‹ All files)
+		// Ë®≠ÂÆö Filter ÈÅ∏ÊìáÊ®°Âºè(‰æùÁÖß Filter Êï∏ÔºåÂ¶ÇÊú¨‰æãÈÅ∏Êìá 1 Ë°®Á§∫Ëµ∑ÂßãÂá∫ÁèæÁöÑÁÇ∫ÈªûÈô£ÂúñÔºåÈÅ∏Êìá 2 Ë°®Á§∫ All files)
 		open_file_dialog->FilterIndex = 1;
 
-		// D:/ºv≠µ/πœ§˘
+		// D:/ÂΩ±Èü≥/ÂúñÁâá
 		//open_file_dialog->InitialDirectory = Environment::GetFolderPath(Environment::SpecialFolder::Desktop);
-		open_file_dialog->InitialDirectory = "D:\\ºv≠µ\\πœ§˘";
+		open_file_dialog->InitialDirectory = "D:\\ÂΩ±Èü≥\\ÂúñÁâá";
 
 		if (open_file_dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK) {
 			FileInfo^ file_info = gcnew FileInfo(open_file_dialog->FileName);
 
 			dir_path = file_info->DirectoryName;
 
-			// TODO: øzøÔπœ§˘√˛´¨™∫¿…Æ◊°A®‰•L¿…Æ◊(¶p: .doc)∑|≥y¶® OutOfMemoryException
-			files = Directory::GetFiles(dir_path);
+			// TODO: ÁØ©ÈÅ∏ÂúñÁâáÈ°ûÂûãÁöÑÊ™îÊ°àÔºåÂÖ∂‰ªñÊ™îÊ°à(Â¶Ç: .doc)ÊúÉÈÄ†Êàê OutOfMemoryException
+			files = imageFliter(Directory::GetFiles(dir_path));
 			n_file = files->Length;
+			LOG(String::Format("n_file: {0}, index: {0}", n_file, index));
 
-			DebugLog->Text += String::Format("dir_path: {0}\n", dir_path);
+			//DebugLog->Text += String::Format("dir_path: {0}\n", dir_path);
 			showPicture(open_file_dialog->FileName);
-		}		
+		}
+	}
+
+	private: array<String^>^ imageFliter(array<String^>^ files) {
+		List<String^>^ list = gcnew List<String^>();
+
+		int i, len = files->Length;
+		String^ path, ^ file_exten;
+		size_t pos;
+		for (i = 0; i < len; i++) {
+			path = files[i];
+			LOG(String::Format("path: {0}", path));
+
+			if (isImage(path)) {
+				list->Add(path);
+			}
+		}
+		LOG(String::Format("n_list: {0}", list->Count));
+		array<String^>^ images = list->ToArray();
+		LOG(String::Format("n_images: {0}", images->Length));
+		return images;
+	}
+
+	private: bool isImage(String^ path) {
+		size_t pos = path->LastIndexOf('.');
+		String^ file_exten = path->Substring(pos + 1, path->Length - pos - 1)->ToLower();
+		LOG(String::Format("isImage | file_exten: {0}", file_exten));
+
+		if (file_exten == "jpg" || file_exten == "png" || file_exten == "bmp") {
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 
 	private: void showPicture_() {
-		// ´≈ßi¬I∞}πœ™∫ÆÊ¶° 
-		// Ref √˛ßOªPµ≤∫c (C++/CX) ∞—¶“√˛´¨™∫´≈ßi™˛•[§F "^"°C
+		// ÂÆ£ÂëäÈªûÈô£ÂúñÁöÑÊ†ºÂºè 
+		// Ref È°ûÂà•ËàáÁµêÊßã (C++/CX) ÂèÉËÄÉÈ°ûÂûãÁöÑÂÆ£ÂëäÈôÑÂä†‰∫Ü "^"„ÄÇ
 		//Bitmap^ image;
 
-		// new §@≠”∑s™∫ open_file_dialog ∂}±“¿…Æ◊
-		// ´ÿ•ﬂ .NET ™´•ÛÆ…®œ•Œ gcnew √ˆ¡‰¶r¶”§£¨O new°A¶”•B gcnew ∑|∂«¶^±±®Ó•NΩX (^) ¶”§£¨O´¸º– (*)
+		// new ‰∏ÄÂÄãÊñ∞ÁöÑ open_file_dialog ÈñãÂïüÊ™îÊ°à
+		// Âª∫Á´ã .NET Áâ©‰ª∂ÊôÇ‰ΩøÁî® gcnew ÈóúÈçµÂ≠óËÄå‰∏çÊòØ newÔºåËÄå‰∏î gcnew ÊúÉÂÇ≥ÂõûÊéßÂà∂‰ª£Á¢º (^) ËÄå‰∏çÊòØÊåáÊ®ô (*)
 		OpenFileDialog^ open_file_dialog = gcnew OpenFileDialog;
 
-		// ≥]©wFilter°A•Œ•H≠≠©w®œ•Œ™Ã∂}±“™∫¿…Æ◊
-		open_file_dialog->Filter = "¬I∞}πœ (*.bmp)| *.bmp| All files (*.*)| *.*";
+		// Ë®≠ÂÆöFilterÔºåÁî®‰ª•ÈôêÂÆö‰ΩøÁî®ËÄÖÈñãÂïüÁöÑÊ™îÊ°à
+		open_file_dialog->Filter = "ÈªûÈô£Âúñ (*.bmp)| *.bmp| All files (*.*)| *.*";
 
-		// πw≥]¿…Æ◊¶W∫Ÿ¨∞™≈≠»
+		// È†êË®≠Ê™îÊ°àÂêçÁ®±ÁÇ∫Á©∫ÂÄº
 		open_file_dialog->FileName = "";
 
-		// ≥]©w∏ı•XøÔæ‹µ¯µ°™∫º–√D¶W∫Ÿ
-		open_file_dialog->Title = "∏¸§Jºvπ≥";
+		// Ë®≠ÂÆöË∑≥Âá∫ÈÅ∏ÊìáË¶ñÁ™óÁöÑÊ®ôÈ°åÂêçÁ®±
+		open_file_dialog->Title = "ËºâÂÖ•ÂΩ±ÂÉè";
 
-		// ≥]©wFilterøÔæ‹º“¶°(®Ã∑”Filterº∆°A¶p•ª®“øÔæ‹1™Ì•‹∞_©l•X≤{™∫¨∞¬I∞}πœ°AøÔæ‹2™Ì•‹All files)
+		// Ë®≠ÂÆöFilterÈÅ∏ÊìáÊ®°Âºè(‰æùÁÖßFilterÊï∏ÔºåÂ¶ÇÊú¨‰æãÈÅ∏Êìá1Ë°®Á§∫Ëµ∑ÂßãÂá∫ÁèæÁöÑÁÇ∫ÈªûÈô£ÂúñÔºåÈÅ∏Êìá2Ë°®Á§∫All files)
 		open_file_dialog->FilterIndex = 1;
 
-		// ∏ı•X¿…Æ◊øÔæ‹µ¯µ°(ShowDialog)°A®√•B¶p™G®œ•Œ™Ã¬IøÔ¿…Æ◊°A®√•B¿…Æ◊¶W∫Ÿ∂WπL0≠”¶r§∏°A´hßP¬_¨O¨∞True°A∂i§J≥B≤zµ{ß«
+		// Ë∑≥Âá∫Ê™îÊ°àÈÅ∏ÊìáË¶ñÁ™ó(ShowDialog)Ôºå‰∏¶‰∏îÂ¶ÇÊûú‰ΩøÁî®ËÄÖÈªûÈÅ∏Ê™îÊ°àÔºå‰∏¶‰∏îÊ™îÊ°àÂêçÁ®±Ë∂ÖÈÅé0ÂÄãÂ≠óÂÖÉÔºåÂâáÂà§Êñ∑ÊòØÁÇ∫TrueÔºåÈÄ≤ÂÖ•ËôïÁêÜÁ®ãÂ∫è
 		if (open_file_dialog->ShowDialog() == System::Windows::Forms::DialogResult::OK && open_file_dialog->FileName->Length > 0)
 		{
-			
-			// safe_cast<T> C≠∑ÆÊ¬‡¥´: •¢±—Æ…±N•·¬Y InvalidCastException ≤ß±`
+
+			// safe_cast<T> CÈ¢®Ê†ºËΩâÊèõ: Â§±ÊïóÊôÇÂ∞á‰∏üÊì≤ InvalidCastException Áï∞Â∏∏
 			//image = safe_cast<Bitmap^>(Image::FromFile(open_file_dialog->FileName));			
 			showPicture(open_file_dialog->FileName);
 		}
 	}
 
-	// System::Void === void
+		   // System::Void === void
 	private: System::Void showPicture(System::String^ file_path) {
-		// ±Nºvπ≥≈„•‹¶b pictureBox1
+		// Â∞áÂΩ±ÂÉèÈ°ØÁ§∫Âú® pictureBox1
 		pictureBox1->Image = Image::FromFile(file_path);
 	}
 
@@ -258,7 +318,7 @@ namespace CppCLRWinformsProjekt {
 			DebugLog->Text = folder_browser_dialog->SelectedPath;
 		}
 	}
-	
+
 	private: System::Void previous_button_Click(System::Object^ sender, System::EventArgs^ e) {
 		index--;
 
@@ -266,7 +326,9 @@ namespace CppCLRWinformsProjekt {
 			index = n_file - 1;
 		}
 
+		WARNING(String::Format("n_file: {0}, index: {1}", n_file, index));
 		showPicture(files[index]);
+
 	}
 
 	private: System::Void next_button_Click(System::Object^ sender, System::EventArgs^ e) {
@@ -276,7 +338,63 @@ namespace CppCLRWinformsProjekt {
 			index = 0;
 		}
 
+		WARNING(String::Format("n_file: {0}, index: {1}", n_file, index));
 		showPicture(files[index]);
 	}
+
+	public: void debugMessage(String^ msg, String^ level) {
+		if (level == nullptr) {
+			level = "LOG";
+		}
+
+		Debug::WriteLine(String::Format("[{0}] {1}", level, msg));
+	}
+
+	private: System::Void onKeyDownListener(System::Object^ sender, System::Windows::Forms::KeyEventArgs^ e) {
+		DebugLog->Text = "Pressed!!";
+		Debug::WriteLine("Pressed!!");
+
+		int key_code = 0;
+		////int key_code = static_cast<int>(e->KeyCode);
+		//LOG(String::Format("key_code: {0}", e->KeyCode));
+		switch (e->KeyCode)
+		{
+		case Keys::NumPad1:
+			key_code = 1;
+			break;
+		case Keys::NumPad2:
+			key_code = 2;
+			break;
+		case Keys::NumPad3:
+			key_code = 3;
+			break;
+		case Keys::NumPad4:
+			key_code = 4;
+			break;
+		case Keys::NumPad5:
+			key_code = 5;
+			break;
+		case Keys::NumPad6:
+			key_code = 6;
+			break;
+		case Keys::NumPad7:
+			key_code = 7;
+			break;
+		case Keys::NumPad8:
+			key_code = 8;
+			break;
+		case Keys::NumPad9:
+			key_code = 9;
+			break;
+		default:
+			break;
+		}
+
+		key_number += key_code;
+		DebugLog->Text = String::Format("{0} + {1} = {2}",
+			key_number - key_code, key_code, key_number);
+
+	}
+
 };
 }
